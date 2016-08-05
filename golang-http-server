@@ -1,0 +1,24 @@
+package main
+
+import (
+    "flag"
+    "fmt"
+    "log"
+    "net/http"
+)
+
+func main() {
+    port := flag.Int("port", 8080, "port to serve on")
+    dir := flag.String("directory", "angularjs/", "directory of angularjs files")
+    flag.Parse()
+
+    fs := http.Dir(*dir)
+    handler := http.FileServer(fs)
+    http.Handle("/", handler)
+
+    log.Printf("Running on port %d\n", *port)
+    
+    addr := fmt.Sprintf("0.0.0.0:%d", *port)
+    err := http.ListenAndServe(addr, nil)
+    fmt.Println(err.Error())
+}

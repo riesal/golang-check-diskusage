@@ -1,1 +1,1 @@
-# golang-check-diskusage
+# golang-scripts compendium

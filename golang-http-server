@@ -5,10 +5,19 @@ import (
     "fmt"
     "log"
     "net/http"
+    "os"
+    "github.com/IBM-Bluemix/cf_deployment_tracker_client_go"
 )
 
 func main() {
-    port := flag.Int("port", 8080, "port to serve on")
+    cf_deployment_tracker.Track()
+    
+    port := os.Getenv("VCAP_APP_PORT")
+	if port == "" {
+		port := flag.Int("port", 8080, "port to serve on")
+	}
+
+    port_local := flag.Int("port", 8080, "port to serve on")
     dir := flag.String("directory", "angularjs/", "directory of angularjs files")
     flag.Parse()
 
